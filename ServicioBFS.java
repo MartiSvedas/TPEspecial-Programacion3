@@ -18,24 +18,22 @@ public class ServicioBFS<T> {
 	}
 	
 	public List<Integer> bfsForest() {
-		List<Integer> bosque = new ArrayList<Integer>();
+		List<Integer> tree = new ArrayList<Integer>();
 		Iterator<Integer> it= this.grafo.obtenerVertices();
-		this.lista = new ArrayList<>();
+		ArrayList<Integer> lis = new ArrayList<>();
 		while(it.hasNext()) {
 			Integer vertice = it.next();
+			lis.add(vertice);
 			visitado.put(vertice, false);
 		}
-		while(it.hasNext() || bosque.isEmpty()) {
 			if(visitado.containsValue(false)) {
-//				Integer v = it.next();
-				bosque.addAll(BFS_Visit(1));
-			}
+				tree.addAll(bfs_Visit(lis.get(0)));
 		}
-		return bosque;
+		return tree;
 		
 	}
 	
-	private List<Integer> BFS_Visit(Integer v) {
+	private List<Integer> bfs_Visit(Integer v) {
 		List<Integer> resultado =new ArrayList<Integer>();
 		visitado.put(v, true);
 		this.lista.add(v);
