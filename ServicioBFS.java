@@ -27,8 +27,8 @@ public class ServicioBFS<T> {
 		}
 		while(it.hasNext() || bosque.isEmpty()) {
 			if(visitado.containsValue(false)) {
-				Integer v = it.next();
-				bosque.addAll(BFS_Visit(v));
+//				Integer v = it.next();
+				bosque.addAll(BFS_Visit(1));
 			}
 		}
 		return bosque;
