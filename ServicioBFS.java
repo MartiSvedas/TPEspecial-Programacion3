@@ -20,16 +20,17 @@ public class ServicioBFS<T> {
 	public List<Integer> bfsForest() {
 		List<Integer> tree = new ArrayList<Integer>();
 		Iterator<Integer> it= this.grafo.obtenerVertices();
-		List<Integer> vertices = new ArrayList<Integer>();
 		this.lista.clear();
 		while(it.hasNext()) {
 			Integer vertice = it.next();
 			visitado.put(vertice, false);
-			vertices.addAll(visitado.keySet());
-		}while(it.hasNext() || tree.isEmpty()) {
-			if(visitado.containsValue(false)) {
-				tree.addAll(bfs_Visit(vertices.get(0)));
-			}
+		}
+		it = this.grafo.obtenerVertices();
+		while(it.hasNext()) {
+			Integer vertice = it.next();
+			if(visitado.get(vertice)==false) {
+				tree.addAll(bfs_Visit(vertice));
+		}
 		}
 		return tree;
 		

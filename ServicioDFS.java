@@ -18,13 +18,16 @@ public class ServicioDFS<T> {
 	public List<Integer> dfsForest(){
 		Iterator<Integer> it = this.grafo.obtenerVertices();
 		List<Integer> tree = new ArrayList<Integer>();
-		List<Integer> vertices = new ArrayList<Integer>();
 		while(it.hasNext()) {
 			Integer vertice = it.next();
 			colores.put(vertice, "blanco");
-			vertices.add(vertice);
-		}while(it.hasNext()|| tree.isEmpty()) {	
-			tree.addAll(dfs_Visit(vertices.get(0)));
+		}
+		it = this.grafo.obtenerVertices();
+		while(it.hasNext()) {
+			Integer vertice = it.next();
+			if( colores.get(vertice)=="blanco") {
+			tree.addAll(dfs_Visit(vertice));
+			}
 		}
 		return tree;
 	}
@@ -34,7 +37,7 @@ public class ServicioDFS<T> {
 		Iterator<Integer> it = this.grafo.obtenerAdyacentes(v);
 		List<Integer> resultado = new ArrayList<Integer>();
 		resultado.add(v);
-		while(it.hasNext() || resultado.isEmpty()) {
+		while(it.hasNext()) {
 			Integer ady=it.next();	
 			if(colores.get(ady).equals("blanco")) {
 				resultado.addAll(dfs_Visit(ady));
@@ -43,4 +46,6 @@ public class ServicioDFS<T> {
 		colores.put(v, "negro");	
 		return resultado;
 	}
+	
+
 }
