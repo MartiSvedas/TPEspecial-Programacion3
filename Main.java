@@ -9,11 +9,14 @@ public class Main {
 		grafo.agregarVertice(2);
 		grafo.agregarVertice(3);
 		grafo.agregarVertice(4);
+
 		
 		grafo.agregarArco(1, 2, null);
 		grafo.agregarArco(1, 3, null);
 		grafo.agregarArco(2, 4, null);
 		grafo.agregarArco(3, 2, null);
+
+
 		
 //		grafo.borrarVertice(1);
 		
@@ -22,8 +25,10 @@ public class Main {
 		System.out.println(grafo.existeArco(3, 2));
 		
 		ServicioBFS<Integer> BFS = new ServicioBFS<Integer>(grafo);
-		
+		ServicioDFS<Integer> DFS = new ServicioDFS<Integer>(grafo);
+
 		System.out.println(BFS.bfsForest());
+		System.out.println(DFS.dfsForest());
 
 	}
 }
