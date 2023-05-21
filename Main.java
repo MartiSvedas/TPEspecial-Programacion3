@@ -20,20 +20,18 @@ public class Main {
 		grafo.agregarArco(5, 2, null);
 		grafo.agregarArco(5, 6, null);
 
-
-
 		
 //		grafo.borrarVertice(1);
 		
 		System.out.println(grafo.cantidadVertices());
 		System.out.println(grafo.cantidadArcos());
-		System.out.println(grafo.existeArco(3, 2));
+		System.out.println(grafo.existeArco(1, 2));
 		
 		ServicioBFS<Integer> BFS = new ServicioBFS<Integer>(grafo);
 		ServicioDFS<Integer> DFS = new ServicioDFS<Integer>(grafo);
 
-		System.out.println(DFS.dfsForest());
-		System.out.println(BFS.bfsForest());
+		System.out.println("Arco tree DFS " + DFS.dfsForest());
+		System.out.println("Arco Tree BFS " + BFS.bfsForest());
 
 	}
 }
