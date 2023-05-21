@@ -50,10 +50,13 @@ public class ServicioCaminos<T> {
 			if(ady!=this.destino) {
 				Iterator<Arco<T>> arcos = this.grafo.obtenerArcos();
 				Arco<T> arco = arcos.next();
+				Iterator<Arco<T>> arcos1 = this.grafo.obtenerArcos(ady);
+				Arco<T> arco1 = arcos1.next();
+				if(arco1.equals(arco)) {
 					
+				}	
 				}
 			}
 		}
 		
-	}
 }
