@@ -19,6 +19,8 @@ public class ServicioCaminos<T> {
 		this.destino=destino;
 		this.lim=lim;
 		this.visitado= new HashMap<>();
+		this.colores= new HashMap<>();
+
 	}
 	
 //	Caminos: dado un origen, un destino y un límite “lim” retorna todos los caminos que, partiendo del
@@ -28,28 +30,32 @@ public class ServicioCaminos<T> {
 	public List<List<Integer>> caminos(){
 		Iterator <Integer> vertices = this.grafo.obtenerVertices();
 		Iterator<Arco<T>> arcos = this.grafo.obtenerArcos();
-		List<List<Integer>> resultado = new ArrayList<List<Integer>>();
+		List<List<Integer>> resultado = new ArrayList<List<Integer>>();		
+
 		while(vertices.hasNext()) {
 			Integer vertice = vertices.next();
 			colores.put(vertice,"blanco");
+
 		}while(arcos.hasNext()) {
 			Arco<T> arco = arcos.next();
 			visitado.put(arco, false);
 		}
+		if(colores.containsKey(this.origen)) {
 		resultado.addAll(buscarCaminos(this.origen));
+		}
 		return resultado;
 	}
 	
 	private List<List<Integer>> buscarCaminos(Integer v){
-		colores.put(v, "amarillo");
 		List<List<Integer>> resultado = new ArrayList<List<Integer>>();
 		List<List<Integer>> caminosParciales = new ArrayList<List<Integer>>();
+		colores.put(v, "amarillo");
 		int cantidad =0;
 		Iterator<Integer> it = this.grafo.obtenerAdyacentes(v);
 		Iterator<Arco<T>> arcos = this.grafo.obtenerArcos(v);
-		Arco<T> arco = arcos.next();
-		visitado.put(arco, true);
 		while(it.hasNext()) {
+			Arco<T> arco = arcos.next();
+			visitado.put(arco, true);
 			Integer ady = it.next();
 			if(colores.get(ady)=="blanco") {
 			if(ady!=this.destino) {

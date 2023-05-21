@@ -1,5 +1,7 @@
 package TPEspecial;
 
+import java.util.List;
+
 public class Main {
 	public static <T> void main(String[]args) {
 		
@@ -29,9 +31,11 @@ public class Main {
 		
 		ServicioBFS<Integer> BFS = new ServicioBFS<Integer>(grafo);
 		ServicioDFS<Integer> DFS = new ServicioDFS<Integer>(grafo);
+		ServicioCaminos<Integer> Camino = new ServicioCaminos<Integer>(grafo,1,2,3);
 
 		System.out.println("Arco tree DFS " + DFS.dfsForest());
 		System.out.println("Arco Tree BFS " + BFS.bfsForest());
+		System.out.println(Camino.caminos());
 
 	}
 }
