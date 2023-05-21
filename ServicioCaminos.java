@@ -43,20 +43,31 @@ public class ServicioCaminos<T> {
 	private List<List<Integer>> buscarCaminos(Integer v){
 		colores.put(v, "amarillo");
 		List<List<Integer>> resultado = new ArrayList<List<Integer>>();
+		List<List<Integer>> caminosParciales = new ArrayList<List<Integer>>();
 		int cantidad =0;
 		Iterator<Integer> it = this.grafo.obtenerAdyacentes(v);
+		Iterator<Arco<T>> arcos = this.grafo.obtenerArcos(v);
+		Arco<T> arco = arcos.next();
+		visitado.put(arco, true);
 		while(it.hasNext()) {
 			Integer ady = it.next();
+			if(colores.get(ady)=="blanco") {
 			if(ady!=this.destino) {
-				Iterator<Arco<T>> arcos = this.grafo.obtenerArcos();
-				Arco<T> arco = arcos.next();
-				Iterator<Arco<T>> arcos1 = this.grafo.obtenerArcos(ady);
-				Arco<T> arco1 = arcos1.next();
-				if(arco1.equals(arco)) {
-					
-				}	
+				cantidad ++;
+				if(visitado.get(arco)==false) {
+					caminosParciales.addAll(buscarCaminos(ady));	
 				}
 			}
+			if(cantidad <= lim || ady==this.destino) {
+				for(List<Integer> caminoParcial : caminosParciales) {
+					resultado.add(caminoParcial);
+					}
+				}
+				
+			}
+			}
+		colores.put(v, "blanco");
+		return resultado;
 		}
 		
 }
