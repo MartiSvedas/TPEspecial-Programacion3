@@ -1,6 +1,7 @@
 package TPEspecial;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -46,46 +47,50 @@ public class ServicioCaminos<T> {
 		while(vertices.hasNext()) {
 			Integer ver  = vertices.next();
 			if(ver==this.origen) {
-				resultado.addAll(buscarCaminos(this.origen));
+				resultado.addAll(buscarCaminos(this.origen,0));
 			}
 		}
 		
 		return resultado;
 	}
 	
-	private List<List<Integer>> buscarCaminos(Integer v){
+
+	private List<List<Integer>> buscarCaminos(Integer v, int cantidad){
 		List<List<Integer>> resultado = new ArrayList<List<Integer>>();
-		List<List<Integer>> caminosParciales = new ArrayList<List<Integer>>();
-		int cantidad =0;
-		Iterator<Integer> it = this.grafo.obtenerAdyacentes(v);
-		Iterator<Arco<T>> arcos = this.grafo.obtenerArcos(v);
 		colores.put(v, "amarillo");
+		cantidad ++;
+		
 		if(v.equals(this.destino)) {
+			
 			ArrayList<Integer> unicoCamino = new ArrayList<>();
 			unicoCamino.add(v);
 			resultado.add(unicoCamino);
 		}else {
+			
+			Iterator<Integer> it = this.grafo.obtenerAdyacentes(v);
 			while(it.hasNext()) {
-			Arco<T> arco = arcos.next();
-			Integer ady = it.next();
-				cantidad ++;
-				if(visitado.get(arco)==false) {
-					caminosParciales.addAll(buscarCaminos(ady));	
-					visitado.put(arco, true);
-				}
-			
-			if(cantidad <= lim || ady==this.destino) {
+				Integer ady = it.next();
+				Arco<T> arc =this.grafo.obtenerArco(v, ady);
+				if(cantidad <= lim ) {
+					if(visitado.get(arc) == false) {
+						
+					List<List<Integer>> caminosParciales = new ArrayList<List<Integer>>();
+					caminosParciales.addAll(buscarCaminos(ady,cantidad));		
+					visitado.put(arc, true);
 				for(List<Integer> caminoParcial : caminosParciales) {
-					resultado.add(caminoParcial);
+					
+					List<Integer> nuevoCamino = new ArrayList<>(caminoParcial);
+					nuevoCamino.add(0, v);
+					resultado.add(nuevoCamino);
 					}
-				
+				}
+				}
 			}
-			
-		}
 		}
 		colores.put(v, "blanco");
 		return resultado;
 		
 		
 }
+
 }
