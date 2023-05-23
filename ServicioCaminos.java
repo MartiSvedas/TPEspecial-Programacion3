@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 
+//Caminos: dado un origen, un destino y un límite “lim” retorna todos los caminos que, partiendo del
+//vértice origen, llega al vértice de destino sin pasar por más de “lim” arcos. Aclaración importante: en
+//un camino no se puede pasar 2 veces por el mismo arco
 public class ServicioCaminos<T> {
 	private Grafo<T> grafo;
 	private int origen;
@@ -21,27 +24,22 @@ public class ServicioCaminos<T> {
 		this.colores= new HashMap<>();
 
 	}
-	
-//	Caminos: dado un origen, un destino y un límite “lim” retorna todos los caminos que, partiendo del
-//	vértice origen, llega al vértice de destino sin pasar por más de “lim” arcos. Aclaración importante: en
-//	un camino no se puede pasar 2 veces por el mismo arco
+
 	
 	public List<List<Integer>> caminos(){
 		Iterator <Integer> vertices = this.grafo.obtenerVertices();
-		List<List<Integer>> resultado = new ArrayList<List<Integer>>();		
-		List<Integer> v = new ArrayList<Integer>();		
+		List<List<Integer>> resultado = new ArrayList<List<Integer>>();	
 
 		while(vertices.hasNext()) {
 			Integer vertice = vertices.next();
 			colores.put(vertice,"blanco");
-			v.add(vertice);
 		}
-
+		
 		vertices = this.grafo.obtenerVertices();
 		while(vertices.hasNext()) {
 			Integer ver  = vertices.next();
 			if(ver==this.origen) {
-				resultado.addAll(buscarCaminos(this.origen,0,null));
+				resultado.addAll(buscarCaminos(this.origen,0, new ArrayList<Arco<T>>()));
 			}
 		}
 		
@@ -49,11 +47,9 @@ public class ServicioCaminos<T> {
 	}
 	
 
-	private List<List<Integer>> buscarCaminos(Integer v, int cantidad, Arco<T>arco){
-		ArrayList<Arco<T>> arcosVisitados = new ArrayList<>();
+	private List<List<Integer>> buscarCaminos(Integer v, int cantidad, List<Arco<T>> arcosVisitados){
 		List<List<Integer>> resultado = new ArrayList<List<Integer>>();
 		colores.put(v, "amarillo");
-		arcosVisitados.add(arco);
 		cantidad ++;
 		
 		if(v.equals(this.destino)) {
@@ -66,21 +62,25 @@ public class ServicioCaminos<T> {
 			Iterator<Integer> it = this.grafo.obtenerAdyacentes(v);
 			while(it.hasNext()) {
 				Integer ady = it.next();
-				Arco<T> arc =this.grafo.obtenerArco(v, ady);
-				if(cantidad <= lim && arcosVisitados.contains(arc)==false) {
+				Arco<T> arco =this.grafo.obtenerArco(v, ady);
+				
+				if(cantidad <= lim && !arcosVisitados.contains(arco)) {
+					arcosVisitados.add(arco);
 					
 					List<List<Integer>> caminosParciales = new ArrayList<List<Integer>>();
-					caminosParciales.addAll(buscarCaminos(ady,cantidad,arc));		
+					caminosParciales.addAll(buscarCaminos(ady, cantidad, arcosVisitados));		
+					
 				for(List<Integer> caminoParcial : caminosParciales) {
 					
 					List<Integer> nuevoCamino = new ArrayList<>(caminoParcial);
 					nuevoCamino.add(0, v);
 					resultado.add(nuevoCamino);
 					}
+					}
+				
 				}
-				}
+			
 			}
-		
 		colores.put(v, "blanco");
 		return resultado;
 		
