@@ -11,7 +11,6 @@ public class ServicioCaminos<T> {
 	private int origen;
 	private int destino;
 	private int lim;
-	private HashMap <Arco<T>,Boolean> visitado;
 	private HashMap <Integer, String> colores;
 	
 	public ServicioCaminos(Grafo<T> g ,int origen, int destino, int lim) {
@@ -19,7 +18,6 @@ public class ServicioCaminos<T> {
 		this.origen=origen;
 		this.destino=destino;
 		this.lim=lim;
-		this.visitado= new HashMap<>();
 		this.colores= new HashMap<>();
 
 	}
@@ -30,7 +28,6 @@ public class ServicioCaminos<T> {
 	
 	public List<List<Integer>> caminos(){
 		Iterator <Integer> vertices = this.grafo.obtenerVertices();
-		Iterator<Arco<T>> arcos = this.grafo.obtenerArcos();
 		List<List<Integer>> resultado = new ArrayList<List<Integer>>();		
 		List<Integer> v = new ArrayList<Integer>();		
 
@@ -38,16 +35,13 @@ public class ServicioCaminos<T> {
 			Integer vertice = vertices.next();
 			colores.put(vertice,"blanco");
 			v.add(vertice);
+		}
 
-		}while(arcos.hasNext()) {
-			Arco<T> arco = arcos.next();
-			visitado.put(arco, false);
-		} 
 		vertices = this.grafo.obtenerVertices();
 		while(vertices.hasNext()) {
 			Integer ver  = vertices.next();
 			if(ver==this.origen) {
-				resultado.addAll(buscarCaminos(this.origen,0));
+				resultado.addAll(buscarCaminos(this.origen,0,null));
 			}
 		}
 		
@@ -55,9 +49,11 @@ public class ServicioCaminos<T> {
 	}
 	
 
-	private List<List<Integer>> buscarCaminos(Integer v, int cantidad){
+	private List<List<Integer>> buscarCaminos(Integer v, int cantidad, Arco<T>arco){
+		ArrayList<Arco<T>> arcosVisitados = new ArrayList<>();
 		List<List<Integer>> resultado = new ArrayList<List<Integer>>();
 		colores.put(v, "amarillo");
+		arcosVisitados.add(arco);
 		cantidad ++;
 		
 		if(v.equals(this.destino)) {
@@ -71,12 +67,10 @@ public class ServicioCaminos<T> {
 			while(it.hasNext()) {
 				Integer ady = it.next();
 				Arco<T> arc =this.grafo.obtenerArco(v, ady);
-				if(cantidad <= lim ) {
-					if(visitado.get(arc) == false) {
-						
+				if(cantidad <= lim && arcosVisitados.contains(arc)==false) {
+					
 					List<List<Integer>> caminosParciales = new ArrayList<List<Integer>>();
-					caminosParciales.addAll(buscarCaminos(ady,cantidad));		
-					visitado.put(arc, true);
+					caminosParciales.addAll(buscarCaminos(ady,cantidad,arc));		
 				for(List<Integer> caminoParcial : caminosParciales) {
 					
 					List<Integer> nuevoCamino = new ArrayList<>(caminoParcial);
@@ -86,7 +80,7 @@ public class ServicioCaminos<T> {
 				}
 				}
 			}
-		}
+		
 		colores.put(v, "blanco");
 		return resultado;
 		
