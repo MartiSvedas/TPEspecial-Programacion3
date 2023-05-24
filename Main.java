@@ -23,7 +23,6 @@ public class Main {
 		grafo.agregarArco(1, 4, null);
 		grafo.agregarArco(2, 1, null);
 
-
 		
 //		grafo.borrarVertice(1);
 		
@@ -33,7 +32,7 @@ public class Main {
 		
 		ServicioBFS<Integer> BFS = new ServicioBFS<Integer>(grafo);
 		ServicioDFS<Integer> DFS = new ServicioDFS<Integer>(grafo);
-		ServicioCaminos<Integer> Camino = new ServicioCaminos<Integer>(grafo,1,4,1);
+		ServicioCaminos<Integer> Camino = new ServicioCaminos<Integer>(grafo,1,4,3);
 
 		System.out.println("Arco tree DFS " + DFS.dfsForest());
 		System.out.println("Arco Tree BFS " + BFS.bfsForest());

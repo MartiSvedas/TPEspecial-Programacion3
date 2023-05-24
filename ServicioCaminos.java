@@ -1,5 +1,6 @@
 package TPEspecial;
 import java.util.List;
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,13 +54,14 @@ public class ServicioCaminos<T> {
 		cantidad ++;
 
 		if(v.equals(this.destino)) {
-			
 			ArrayList<Integer> unicoCamino = new ArrayList<>();
 			unicoCamino.add(v);
 			resultado.add(unicoCamino);
+			
 		}else {
 			Iterator<Arco<T>> arcos =this.grafo.obtenerArcos(v);
 			Iterator<Integer> it = this.grafo.obtenerAdyacentes(v);
+			
 			while(it.hasNext()) {
 				Integer ady = it.next();
 				Arco<T> arco = arcos.next();
@@ -70,15 +72,12 @@ public class ServicioCaminos<T> {
 					List<List<Integer>> caminosParciales = new ArrayList<List<Integer>>();
 					caminosParciales.addAll(buscarCaminos(ady, cantidad, nuevosArcosVisitados));	
 					
-
 				for(List<Integer> caminoParcial : caminosParciales) {
-					
 					List<Integer> nuevoCamino = new ArrayList<>(caminoParcial);
 					nuevoCamino.add(0, v);
 					resultado.add(nuevoCamino);
 					}
 					}
-				
 				
 				}
 			

@@ -38,7 +38,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, etiqueta);
 			if(CompGrafo.containsKey(verticeId1)) {
+				ArrayList<Arco<T>>arcos =CompGrafo.get(verticeId1);
+				if(!arcos.contains(a)) {
 				CompGrafo.get(verticeId1).add(a);
+				}
 			}
 	}
 
