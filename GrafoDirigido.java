@@ -24,7 +24,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		CompGrafo.putIfAbsent(verticeId, new ArrayList<Arco<T>>());
 	}
 
-	//Complejidad: O(n)  n->cantidad de arcos
+	//Complejidad: O(m)  m->cantidad de arcos
 	public void borrarVertice(int verticeId) {
 		for(Arco<T> a: CompGrafo.get(verticeId)) {
 			if(a.getVerticeDestino()==verticeId) {
@@ -100,7 +100,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return CompGrafo.keySet().size();
 	}
 
-	//Complejidad : O(m) m-> cantidad de arcos 
+	//Complejidad : O(m + n) m-> cantidad de arcos n-> cantidad de vertices
 	public int cantidadArcos() {
 		int cantidad=0;
 		for(Entry<Integer,ArrayList<Arco<T>>> key : CompGrafo.entrySet()) {
@@ -116,7 +116,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 	
 
-	//Complejidad : O(n) n-> cantidad de vertices
+	//Complejidad : O(n) n->cantidad de vertices
 	public Iterator<Arco<T>> obtenerArcos() {
 		ArrayList<Arco<T>> arcos=new ArrayList<>();
 		for(Entry<Integer, ArrayList<Arco<T>>> key : CompGrafo.entrySet()) {
