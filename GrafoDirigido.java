@@ -14,17 +14,17 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public GrafoDirigido() {
 		this.CompGrafo =new HashMap<Integer,ArrayList<Arco<T>>>();	
 	}
-	
+	//Complejidad: O(1)
 	public int numVertices() {
 		return CompGrafo.size();
 	}
 	
-	@Override
+	//Complejidad: O(1) 
 	public void agregarVertice(int verticeId) {
 		CompGrafo.putIfAbsent(verticeId, new ArrayList<Arco<T>>());
 	}
 
-	@Override
+	//Complejidad: O(n)  n->cantidad de arcos
 	public void borrarVertice(int verticeId) {
 		for(Arco<T> a: CompGrafo.get(verticeId)) {
 			if(a.getVerticeDestino()==verticeId) {
@@ -34,7 +34,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		CompGrafo.remove(verticeId);
 	}
 	
-	@Override
+	//Complejidad: O(1) 
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, etiqueta);
 			if(CompGrafo.containsKey(verticeId1)) {
@@ -45,7 +45,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 			}
 	}
 
-	@Override
+	//Complejidad : O(m) m-> cantidad de arcos
 	public void borrarArco(int verticeId1, int verticeId2) {
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, null);
 		if(CompGrafo.containsKey(verticeId1)) {
@@ -58,12 +58,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	}
 
-	@Override
+	//Complejidad : O(1) 
 	public boolean contieneVertice(int verticeId) {
 		return CompGrafo.containsKey(verticeId);
 	}
 
-	@Override
+	//Complejidad : O(m) m-> cantidad de arcos
 	public boolean existeArco(int verticeId1, int verticeId2) {
 		boolean existe=false;
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, null);
@@ -77,7 +77,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return existe;
 	}
 
-	@Override
+	//Complejidad : O(m ) m-> cantidad de arcos 
 	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, null);
 		Arco<T> arc=null;
@@ -95,12 +95,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		}
 
 
-	@Override
+	//Complejidad: O(1)
 	public int cantidadVertices() {
 		return CompGrafo.keySet().size();
 	}
 
-	@Override
+	//Complejidad : O(m) m-> cantidad de arcos 
 	public int cantidadArcos() {
 		int cantidad=0;
 		for(Entry<Integer,ArrayList<Arco<T>>> key : CompGrafo.entrySet()) {
@@ -110,13 +110,13 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		}return cantidad;
 	}
 
-	@Override
+	//Complejidad: O(1)  
 	public Iterator<Integer> obtenerVertices() {
 		return CompGrafo.keySet().iterator();
 	}
 	
 
-	@Override
+	//Complejidad : O(n) n-> cantidad de vertices
 	public Iterator<Arco<T>> obtenerArcos() {
 		ArrayList<Arco<T>> arcos=new ArrayList<>();
 		for(Entry<Integer, ArrayList<Arco<T>>> key : CompGrafo.entrySet()) {
@@ -126,7 +126,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 
-	@Override
+	//Complejidad : O(m) m-> cantidad de arcos
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
 		ArrayList<Integer> ady = new ArrayList<>();
 		if(CompGrafo.containsKey(verticeId)) {
@@ -138,7 +138,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	}
 
-	@Override
+	//Complejidad : O(m) m-> cantidad de arcos
 	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
 		ArrayList<Arco<T>> values = CompGrafo.get(verticeId);
 		return values.iterator();	
