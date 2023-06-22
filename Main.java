@@ -1,6 +1,4 @@
-package TPEspecial;
-
-import java.util.List;
+package src.TPEspecial;
 
 public class Main {
 	public static <T> void main(String[]args) {
@@ -26,17 +24,21 @@ public class Main {
 		
 //		grafo.borrarVertice(1);
 		
-		System.out.println(grafo.cantidadVertices());
-		System.out.println(grafo.cantidadArcos());
+		System.out.println("Cantidad vertices " + grafo.cantidadVertices());
+		System.out.println("Cantidad Arcos " + grafo.cantidadArcos());
 		System.out.println(grafo.existeArco(1, 2));
-		
-		ServicioBFS<Integer> BFS = new ServicioBFS<Integer>(grafo);
-		ServicioDFS<Integer> DFS = new ServicioDFS<Integer>(grafo);
-		ServicioCaminos<Integer> Camino = new ServicioCaminos<Integer>(grafo,1,4,3);
+		grafo.borrarArco(1, 2);
+		System.out.println("Cantidad Arcos " + grafo.cantidadArcos());
+		System.out.println(grafo.obtenerArco(1, 2));
 
-		System.out.println("Arco tree DFS " + DFS.dfsForest());
-		System.out.println("Arco Tree BFS " + BFS.bfsForest());
-		System.out.println(Camino.caminos());
+		
+//		ServicioBFS<Integer> BFS = new ServicioBFS<Integer>(grafo);
+//		ServicioDFS<Integer> DFS = new ServicioDFS<Integer>(grafo);
+//		ServicioCaminos<Integer> Camino = new ServicioCaminos<Integer>(grafo,1,4,3);
+
+//		System.out.println("Arco tree DFS " + DFS.dfsForest());
+//		System.out.println("Arco Tree BFS " + BFS.bfsForest());
+//		System.out.println(Camino.caminos());
 
 	}
 }
