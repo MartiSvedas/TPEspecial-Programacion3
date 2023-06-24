@@ -14,12 +14,12 @@ import java.util.List;
 public class Greedy<T> {
 	private int suma;
 	private int contadorGreedy;
-	private ArrayList<Arco<T>> redSubterraneos;
+	private ArrayList<Arco<T>> redSubterraneo;
 	
 	public Greedy() {
 		this.suma=0;
 		this.contadorGreedy=0;
-		this.redSubterraneos= new ArrayList<>();
+		this.redSubterraneo= new ArrayList<>();
 
 	}
 		
@@ -35,36 +35,29 @@ public class Greedy<T> {
 		while(visitados.size()!=estaciones.size()) {
 			//selecciono el arco de menor valor
 			Arco<T> arcoMinimo=seleccionar(g.obtenerArcos(estacion));
-			//agrego la estacion a visitados
-			//agrego el arcoMinimo al arreglo de redSubterraneo
-			//Si no esta en el arreglo de visitados selecciono la estacion destino del arcoMinimo obtenido (NullPointerException)
-			//sumo el valor de la etiqueta del arcominimo a suma 
-			
+			//Si la estacion todavia no fue visitada
+				if(!visitados.contains(estacion)) {
+				//agrego la estacion a visitados
+					visitados.add(estacion);
+				//agrego el arcoMinimo al arreglo de redSubterraneo
+					redSubterraneo.add(arcoMinimo);
+				//Si tiene estaciones siguientes
+				if(arcoMinimo!=null && arcoMinimo.getVerticeDestino()!=null) { 
+					//selecciono la estacion destino del arcoMinimo obtenido 
+					estacion=arcoMinimo.getVerticeDestino();
+					//sumo el valor de la etiqueta del arcominimo a suma
+					suma+=arcoMinimo.getEtiqueta();
+				
+				}
+				}
+				contadorGreedy++;
 		
-//			estaciones.remove(estacion);
-//			
-//			if(!visitados.contains(estacion)) {
-//				suma+=obtenerSuma(arcoMinimo);
-//				visitados.add(estacion);
-//				this.redSubterraneos.add(arcoMinimo);
-//				contadorGreedy++;
-//			}
 		}
+		return visitados;
 			
 		
 		
 	}
-
-	
-	private int obtenerSuma(Arco<T> arco) {
-	if(arco!=null) {
-		return arco.getEtiqueta();
-	}else {
-		return 0;
-	}
-		
-	}
-	
 
 	private Arco<T> seleccionar(Iterator<Arco<T>> it){ //obtengo el arco de menor peso
 		Arco<T> arcoMenor = null;
@@ -79,7 +72,7 @@ public class Greedy<T> {
 	}
 	
 	public ArrayList<Arco<T>> getRedSubterraneos() {
-		return redSubterraneos;
+		return redSubterraneo;
 	}
 
 	public int getSuma() {
