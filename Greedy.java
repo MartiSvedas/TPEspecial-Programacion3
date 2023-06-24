@@ -81,4 +81,8 @@ public class Greedy<T> {
 		return suma;
 	}
 
+	public int getContadorGreedy() {
+		return contadorGreedy;
+	}
+
 }
