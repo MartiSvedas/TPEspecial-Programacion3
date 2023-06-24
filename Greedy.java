@@ -33,10 +33,14 @@ public class Greedy<T> {
 		}
 		T estacion = estaciones.get(0);
 		while(visitados.size()!=estaciones.size()) {
+			//selecciono el arco de menor valor
+			Arco<T> arcoMinimo=seleccionar(g.obtenerArcos(estacion));
+			//agrego la estacion a visitados
+			//agrego el arcoMinimo al arreglo de redSubterraneo
+			//Si no esta en el arreglo de visitados selecciono la estacion destino del arcoMinimo obtenido (NullPointerException)
+			//sumo el valor de la etiqueta del arcominimo a suma 
 			
 		
-//		while(!estaciones.isEmpty()) {
-//			Arco<T> arcoMinimo=seleccionar(g.obtenerArcos(estacion));
 //			estaciones.remove(estacion);
 //			
 //			if(!visitados.contains(estacion)) {
