@@ -42,9 +42,9 @@ public class Main {
 //		System.out.println(Camino.caminos());
 	
 	//Segunda parte TPE
-		GrafoDirigido<Integer> grafo = new GrafoNoDirigido<Integer>();
+		GrafoNoDirigido<Integer> grafo = new GrafoNoDirigido<Integer>();
 
-		String path = "/home/martu/eclipse-workspace/Programacion3/src/src/TPEspecial/Dataset/dataset1.txt";
+		String path = "/home/martu/eclipse-workspace/Programacion3/src/src/TPEspecial/Dataset/dataset2.txt";
 		CSVReader<Integer> reader = new CSVReader<Integer>(path);
 		reader.read(grafo);
 		Greedy<Integer> greedy = new Greedy<Integer>();
