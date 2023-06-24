@@ -1,4 +1,4 @@
-package TPEspecial;
+package src.TPEspecial;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -7,24 +7,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class ServicioDFS<T> {
-	private Grafo<Integer> grafo ;
-	private HashMap<Integer, String> colores;
+	private Grafo<T> grafo ;
+	private HashMap<T, String> colores;
 	
-	public ServicioDFS(Grafo<Integer> g) {
+	public ServicioDFS(Grafo<T> g) {
 		this.grafo=g;
 		this.colores= new HashMap<>();
 	}
 	
-	public List<Integer> dfsForest(){
-		Iterator<Integer> it = this.grafo.obtenerVertices();
-		List<Integer> tree = new ArrayList<Integer>();
+	public List<T> dfsForest(){
+		Iterator<T> it = this.grafo.obtenerVertices();
+		List<T> tree = new ArrayList<T>();
 		while(it.hasNext()) {
-			Integer vertice = it.next();
+			T vertice = it.next();
 			colores.put(vertice, "blanco");
 		}
 		it = this.grafo.obtenerVertices();
 		while(it.hasNext()) {
-			Integer vertice = it.next();
+			T vertice = it.next();
 			if( colores.get(vertice)=="blanco") {
 			tree.addAll(dfs_Visit(vertice));
 			}
@@ -32,13 +32,13 @@ public class ServicioDFS<T> {
 		return tree;
 	}
 	
-	private List<Integer> dfs_Visit(Integer v){
+	private List<T> dfs_Visit(T v){
 		colores.put(v, "amarillo");
-		Iterator<Integer> it = this.grafo.obtenerAdyacentes(v);
-		List<Integer> resultado = new ArrayList<Integer>();
+		Iterator<T> it = this.grafo.obtenerAdyacentes(v);
+		List<T> resultado = new ArrayList<T>();
 		resultado.add(v);
 		while(it.hasNext()) {
-			Integer ady=it.next();	
+			T ady=it.next();	
 			if(colores.get(ady).equals("blanco")) {
 				resultado.addAll(dfs_Visit(ady));
 		}

@@ -10,23 +10,23 @@ import src.TPEspecial.Arco;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 
-	private HashMap<Integer, ArrayList<Arco<T>>> compGrafo;
+	private HashMap<T, ArrayList<Arco<T>>> compGrafo;
 	private int cantArcos;
 
 	public GrafoDirigido() {
-		this.compGrafo =new HashMap<Integer,ArrayList<Arco<T>>>();	
+		this.compGrafo =new HashMap<T,ArrayList<Arco<T>>>();	
 		cantArcos=0;
 	}
 
 	//Complejidad: O(1) 
-	public void agregarVertice(int verticeId) {
+	public void agregarVertice(T verticeId) {
 		compGrafo.putIfAbsent(verticeId, new ArrayList<Arco<T>>());
 	}
 
 	//Complejidad: O(m)  m->cantidad de arcos
-	public void borrarVertice(int verticeId) {
+	public void borrarVertice(T verticeId) {
 		for(Arco<T> a: compGrafo.get(verticeId)) {
-			if(a.getVerticeDestino()==verticeId || a.getVerticeOrigen()==verticeId) {
+			if(a.getVerticeDestino()==verticeId && a.getVerticeOrigen()==verticeId) {
 				compGrafo.get(verticeId).remove(a);
 		}
 	}
@@ -34,7 +34,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 	
 	//Complejidad: O(1) 
-	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
+	public void agregarArco(T verticeId1, T verticeId2, int etiqueta) {
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, etiqueta);
 			if(compGrafo.containsKey(verticeId1)) {
 				ArrayList<Arco<T>>arcos =compGrafo.get(verticeId1);
@@ -46,7 +46,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	//Complejidad : O(m) m-> cantidad de arcos
-	public void borrarArco(int verticeId1, int verticeId2) {
+	public void borrarArco(T verticeId1, T verticeId2) {
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, null);
 		if(compGrafo.containsKey(verticeId1)) {
 			ArrayList<Arco<T>>arcos =compGrafo.get(verticeId1);
@@ -63,12 +63,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	//Complejidad : O(1) 
-	public boolean contieneVertice(int verticeId) {
+	public boolean contieneVertice(T verticeId) {
 		return compGrafo.containsKey(verticeId);
 	}
 
 	//Complejidad : O(m) m-> cantidad de arcos
-	public boolean existeArco(int verticeId1, int verticeId2) {
+	public boolean existeArco(T verticeId1, T verticeId2) {
 		boolean existe=false;
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, null);
 		for(Arco<T> ar: compGrafo.get(verticeId1)) {
@@ -82,7 +82,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	//Complejidad : O(m ) m-> cantidad de arcos 
-	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
+	public Arco<T> obtenerArco(T verticeId1, T verticeId2) {
 		Arco<T> a = new Arco<T>(verticeId1, verticeId2, null);
 		if(compGrafo.containsKey(verticeId1)) {
 			ArrayList<Arco<T>>arcos =compGrafo.get(verticeId1);
@@ -107,7 +107,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	//Complejidad: O(1)  
-	public Iterator<Integer> obtenerVertices() {
+	public Iterator<T> obtenerVertices() {
 		return compGrafo.keySet().iterator();
 	}
 	
@@ -115,7 +115,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	//Complejidad : O(n+m) n->cantidad de vertices m-> cantidad de arcos
 	public Iterator<Arco<T>> obtenerArcos() {
 		ArrayList<Arco<T>> arcos=new ArrayList<>();
-		for(Entry<Integer, ArrayList<Arco<T>>> key : compGrafo.entrySet()) {
+		for(Entry<T, ArrayList<Arco<T>>> key : compGrafo.entrySet()) {
 			arcos.addAll(key.getValue());
 		}
 		return arcos.iterator();
@@ -123,8 +123,8 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 
 	//Complejidad : O(m) m-> cantidad de arcos
-	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-		ArrayList<Integer> ady = new ArrayList<>();
+	public Iterator<T> obtenerAdyacentes(T verticeId) {
+		ArrayList<T> ady = new ArrayList<>();
 		if(compGrafo.containsKey(verticeId)) {
 			for(Arco<T> arcos : compGrafo.get(verticeId)) {
 				ady.add(arcos.getVerticeDestino());
@@ -135,7 +135,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	//Complejidad : O(1)
-	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
+	public Iterator<Arco<T>> obtenerArcos(T verticeId) {
 		ArrayList<Arco<T>> values = compGrafo.get(verticeId);
 		return values.iterator();	
 	}

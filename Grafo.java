@@ -4,29 +4,29 @@ import java.util.Iterator;
 
 
 public interface Grafo<T> {
-	public void agregarVertice(int verticeId);
+	public void agregarVertice(T verticeId);
 	
-	public void borrarVertice(int verticeId);
+	public void borrarVertice(T verticeId);
 	
-	public void agregarArco(int verticeId1, int verticeId2, T etiqueta);
+	public void agregarArco(T verticeId1, T verticeId2, int etiqueta);
 	
-	public void borrarArco(int verticeId1, int verticeId2);
+	public void borrarArco(T verticeId1, T verticeId2);
 	
-	public boolean contieneVertice(int verticeId);
+	public boolean contieneVertice(T verticeId);
 	
-	public boolean existeArco(int verticeId1, int verticeId2);
+	public boolean existeArco(T verticeId1, T verticeId2);
 	
-	public Arco<T> obtenerArco(int verticeId1, int verticeId2);
+	public Arco<T> obtenerArco(T verticeId1, T verticeId2);
 	
 	public int cantidadVertices();
 	
 	public int cantidadArcos();
 	
-	public Iterator<Integer> obtenerVertices();
+	public Iterator<T> obtenerVertices();
 	
-	public Iterator<Integer> obtenerAdyacentes(int verticeId);
+	public Iterator<T> obtenerAdyacentes(T verticeId);
 	
 	public Iterator<Arco<T>> obtenerArcos();
 	
-	public Iterator<Arco<T>> obtenerArcos(int verticeId);
+	public Iterator<Arco<T>> obtenerArcos(T verticeId);
 }

@@ -1,4 +1,4 @@
-package TPEspecial;
+package src.TPEspecial;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -8,8 +8,8 @@ import java.util.Iterator;
 
 public class ServicioBFS<T> {
 	private Grafo<T> grafo;
-	private HashMap <Integer, Boolean> visitado;
-	private ArrayList<Integer> lista;
+	private HashMap <T, Boolean> visitado;
+	private ArrayList<T> lista;
 	
 	public ServicioBFS(Grafo<T> g) {
 		this.grafo=g;
@@ -17,17 +17,17 @@ public class ServicioBFS<T> {
 		this.lista= new ArrayList<>();
 	}
 	
-	public List<Integer> bfsForest() {
-		List<Integer> tree = new ArrayList<Integer>();
-		Iterator<Integer> it= this.grafo.obtenerVertices();
+	public List<T> bfsForest() {
+		List<T> tree = new ArrayList<T>();
+		Iterator<T> it= this.grafo.obtenerVertices();
 		this.lista.clear();
 		while(it.hasNext()) {
-			Integer vertice = it.next();
+			T vertice = it.next();
 			visitado.put(vertice, false);
 		}
 		it = this.grafo.obtenerVertices();
 		while(it.hasNext()) {
-			Integer vertice = it.next();
+			T vertice = it.next();
 			if(visitado.get(vertice)==false) {
 				tree.addAll(bfs_Visit(vertice));
 		}
@@ -36,16 +36,16 @@ public class ServicioBFS<T> {
 		
 	}
 	
-	private List<Integer> bfs_Visit(Integer v) {
-		List<Integer> resultado =new ArrayList<Integer>();
+	private List<T> bfs_Visit(T v) {
+		List<T> resultado =new ArrayList<T>();
 		visitado.put(v, true);
 		resultado.add(v);
 		this.lista.add(v);
 		while(!lista.isEmpty()) {
-			Iterator<Integer> it = this.grafo.obtenerAdyacentes(lista.get(0));
+			Iterator<T> it = this.grafo.obtenerAdyacentes(lista.get(0));
 			lista.remove(lista.get(0));
 			while(it.hasNext()) {
-				Integer ady = it.next();
+				T ady = it.next();
 				if(visitado.get(ady).equals(false)) {
 					resultado.add(ady);
 					visitado.put(ady, true);

@@ -2,24 +2,24 @@ package src.TPEspecial;
 
 
 public class Arco<T> {
-	private Integer verticeOrigen;
-	private Integer verticeDestino;
-	private T etiqueta;
+	private T verticeOrigen;
+	private T verticeDestino;
+	private Integer etiqueta;
 	
-	public Arco(Integer verticeOrigen, Integer verticeDestino, T etiqueta) {
+	public Arco(T verticeOrigen, T verticeDestino, Integer etiqueta) {
 		this.verticeOrigen = verticeOrigen;
 		this.verticeDestino = verticeDestino;
 		this.etiqueta = etiqueta ;
 	}
 	
-	public Integer getVerticeOrigen() {
+	public T getVerticeOrigen() {
 		return verticeOrigen;
 	}
 	
-	public Integer getVerticeDestino() {
+	public T getVerticeDestino() {
 		return verticeDestino;
 	}
-	public T getEtiqueta() {
+	public Integer getEtiqueta() {
 		return etiqueta;
 	}
 	
@@ -32,6 +32,8 @@ public class Arco<T> {
 	}
 		
 	public String toString() {
-		return "El vertice origen es [ vertice origen = " + verticeOrigen + "] El vertice destino del arco es [ vertice destino = " + verticeDestino + " ]";
+		return  "[ "+ verticeOrigen +", "+ verticeDestino +" ]";
 	}
+
+
 }

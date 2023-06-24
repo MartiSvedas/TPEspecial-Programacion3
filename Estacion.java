@@ -1,17 +1,20 @@
 package src.TPEspecial;
 
 public class Estacion {
-	private Integer distancia;
+	private String nombre;
+
 	
-	public Estacion(Integer d) {
-		this.distancia = d;
+	public Estacion(String n) {
+		this.nombre=n;
 	}
 
-	public Integer getDistancia() {
-		return distancia;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDistancia(Integer distancia) {
-		this.distancia = distancia;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
+
+
 }
