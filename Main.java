@@ -48,7 +48,8 @@ public class Main {
 		CSVReader<Integer> reader = new CSVReader<Integer>(path);
 		reader.read(grafo);
 		Greedy<Integer> greedy = new Greedy<Integer>();
-		System.out.println(greedy.aplicarGreedy(grafo));
+		greedy.aplicarGreedy(grafo);
+//		System.out.println(greedy.aplicarGreedy(grafo));
 		System.out.println(greedy.getRedSubterraneos());
 		System.out.println(greedy.getSuma());
 

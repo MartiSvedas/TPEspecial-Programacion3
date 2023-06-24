@@ -24,7 +24,7 @@ public class Greedy<T> {
 
 	}
 		
-	public ArrayList<T> aplicarGreedy(Grafo<T> g) {
+	public void aplicarGreedy(Grafo<T> g) {
 		 ArrayList<T> visitados =new ArrayList<>();//estaciones visitadas
 		Iterator<T> it = g.obtenerVertices();
 		T estacionInicial =it.next();
@@ -37,21 +37,19 @@ public class Greedy<T> {
 			Arco<T> arcoMinimo = seleccionar(arcosPendientes);
 			T estacionOrigen=arcoMinimo.getVerticeOrigen();
 			T estacionDestino=arcoMinimo.getVerticeDestino();
-			visitados.add(estacionOrigen);
 			arcosPendientes.remove(arcoMinimo);
 			
-			if(!visitados.contains(estacionDestino)) {
-				redSubterraneo.add(arcoMinimo);
+			if(visitados.contains(estacionOrigen)&&!visitados.contains(estacionDestino) ) {
 				visitados.add(estacionDestino);
+				redSubterraneo.add(arcoMinimo);
 				arcosPendientes.addAll(obtenerArcos(g.obtenerArcos(estacionDestino)));
 				suma+=arcoMinimo.getEtiqueta();
+				
 			}
+			contadorGreedy++;
 		}
-		return visitados;
 		
 	}
-	
-	
 
 	private ArrayList<Arco<T>> obtenerArcos(Iterator<Arco<T>> it){ 
 		ArrayList<Arco<T>> arcos = new ArrayList<>();
@@ -62,7 +60,7 @@ public class Greedy<T> {
 		return arcos;
 	}
 	
-	private Arco<T> seleccionar(ArrayList<Arco<T>> ar){
+	private Arco<T> seleccionar(ArrayList<Arco<T>> ar){ //obtengo el arco de menor peso
 		Arco<T> arcoMenor = null;
 		int menorDistancia = Integer.MAX_VALUE;
 		for(Arco<T> arco : ar) {
