@@ -35,7 +35,7 @@ public class Greedy<T> {
 		
 		while(visitados.size()<=g.cantidadVertices()) {
 			Arco<T> arcoMinimo = seleccionar(arcosPendientes);
-			T estacionOrigen=arcoMinimo.getVerticeOrigen();
+			T estacionOrigen=arcoMinimo.getVerticeOrigen();//AQUI DA ERROR :(
 			T estacionDestino=arcoMinimo.getVerticeDestino();
 			arcosPendientes.remove(arcoMinimo);
 			
