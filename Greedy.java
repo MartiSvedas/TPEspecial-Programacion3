@@ -34,8 +34,8 @@ public class Greedy<T> {
 				arcosPendientes.addAll(obtenerArcos(g.obtenerArcos(estacionDestino)));
 				this.redSubterraneo.add(arcoMinimo);
 				this.suma+=arcoMinimo.getEtiqueta();
-				this.contadorGreedy++;
 			}
+			this.contadorGreedy++;
 		}
 	}
 	
