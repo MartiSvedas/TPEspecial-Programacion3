@@ -31,15 +31,12 @@ public class Greedy<T> {
 			
 			if(!visitados.contains(estacionDestino) ) {
 				visitados.add(estacionDestino);
-				redSubterraneo.add(arcoMinimo);
 				arcosPendientes.addAll(obtenerArcos(g.obtenerArcos(estacionDestino)));
-				suma+=arcoMinimo.getEtiqueta();
-				
+				this.redSubterraneo.add(arcoMinimo);
+				this.suma+=arcoMinimo.getEtiqueta();
+				this.contadorGreedy++;
 			}
-			contadorGreedy++;
 		}
-				
-		
 	}
 	
 	private boolean contieneTodasLasEstaciones(ArrayList<T> visitados, Grafo<T> g) {
