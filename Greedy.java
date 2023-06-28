@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Greedy<T> {
-	private int suma;
+	private int mejorSolucion;
 	private int contadorGreedy;
 	private ArrayList<Arco<T>> redSubterraneo;
 	
 	public Greedy() {
-		this.suma=0;
+		this.mejorSolucion=0;
 		this.contadorGreedy=0;
 		this.redSubterraneo= new ArrayList<>();
 
@@ -33,9 +33,9 @@ public class Greedy<T> {
 				visitados.add(estacionDestino);
 				arcosPendientes.addAll(obtenerArcos(g.obtenerArcos(estacionDestino)));
 				this.redSubterraneo.add(arcoMinimo);
-				this.suma+=arcoMinimo.getEtiqueta();
+				this.mejorSolucion+=arcoMinimo.getEtiqueta();
+				this.contadorGreedy++;
 			}
-			this.contadorGreedy++;
 		}
 	}
 	
@@ -75,7 +75,7 @@ public class Greedy<T> {
 	}
 
 	public int getSuma() {
-		return suma;
+		return mejorSolucion;
 	}
 
 	public int getContadorGreedy() {

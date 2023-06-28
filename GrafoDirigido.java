@@ -87,7 +87,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		if(compGrafo.containsKey(verticeId1)) {
 			ArrayList<Arco<T>>arcos =compGrafo.get(verticeId1);
 			for(Arco<T> arco : arcos) {
-				if(arco.equals(a)) {
+				if(arco.getVerticeDestino().equals(verticeId2)) { //FIXME FIXME para que ande tambien en GND
 					return arco;
 				}
 			}
