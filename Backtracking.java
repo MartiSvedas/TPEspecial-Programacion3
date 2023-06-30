@@ -1,92 +1,83 @@
 package src.TPEspecial;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 
 public class Backtracking<T> {
 	
-	//arrayList de soluciones
-	private ArrayList<T> redSubterraneo;
-	public int longitudRedSubterraneo;
+	private ArrayList<Arco<T>> redSubterraneo;
+	private int longitudRedSubterraneo;
+	private HashMap<T,Boolean> estaciones;
 	
 	public Backtracking(){
-		this.redSubterraneo = new ArrayList<>();
-		longitudRedSubterraneo = Integer.MAX_VALUE; /*Esto es un número muy, muy grande*/
+		this.redSubterraneo = new ArrayList<Arco<T>>();
+		this.longitudRedSubterraneo = Integer.MAX_VALUE;
+		this.estaciones = new HashMap<>();
 	}
 	
-	public void resolverBacktraking(GrafoNoDirigido<T> grafo) {
-		ArrayList<T> solucion= new ArrayList<>();
-		Iterator<T> it = grafo.obtenerVertices();
-		T estacionInicial =it.next();
-		backtracking(grafo, estacionInicial,0,solucion);
+	public void resolverBacktraking(GrafoDirigido<T> grafo) {
+		ArrayList<Arco<T>> arcos= new ArrayList<>(); 
+		ArrayList<Arco<T>> solucion= new ArrayList<>();
+		Iterator<Arco<T>> arcosGrafo = grafo.obtenerArcos();
+		while(arcosGrafo.hasNext()){
+			Arco<T> arco = arcosGrafo.next();
+			arcos.add(arco);
+		}
+		backtracking(arcos,0,solucion);
+	}
 
-		
+	
+	public void backtracking(ArrayList<Arco<T>> arcos, int metrosDeRedActualEnConstruccion, ArrayList<Arco<T>> solucionEnConstruccion){	
+		if(arcos.isEmpty()){
+			
+			if(!solucionEnConstruccion.isEmpty()) {
+				if(metrosDeRedActualEnConstruccion<=longitudRedSubterraneo){
+					longitudRedSubterraneo = metrosDeRedActualEnConstruccion;
+					redSubterraneo.clear();
+					redSubterraneo.addAll(solucionEnConstruccion);
+			}
+			}
+		}
+		else{//agrego a solucion
+			for(int i =0; i<arcos.size(); i++){
+				Arco<T> arcoSiguiente = arcos.get(i);
+				T estacionSiguiente = arcoSiguiente.getVerticeDestino();
+					if(!estaciones.get(estacionSiguiente)) {
+						estaciones.put(estacionSiguiente, false);
+						arcos.remove(arcoSiguiente);
+						solucionEnConstruccion.add(arcoSiguiente);
+						metrosDeRedActualEnConstruccion += arcoSiguiente.getEtiqueta();
+					}
+					if(!poda(metrosDeRedActualEnConstruccion)){
+						backtracking(arcos, metrosDeRedActualEnConstruccion, solucionEnConstruccion);
+
+					}
+					metrosDeRedActualEnConstruccion -= arcoSiguiente.getEtiqueta();
+					solucionEnConstruccion.remove(arcoSiguiente);
+					estaciones.put(estacionSiguiente, true);
+					arcos.add(arcoSiguiente);
+				
+
+			}
+		}
 	}
 	
-	//poda: si el camino que llevo es mas largo que el camino parcial tengo guardado como más corto podo toda esa rama.
+	
 	public boolean poda(int sumaCaminoHastaAhora){
 		return sumaCaminoHastaAhora >= longitudRedSubterraneo;
 	}
-	
-	//metodo void backtracking que agrega elementos a la redsubterraneo
-	public boolean backtracking(GrafoNoDirigido<T> grafo, T estacionActual, int metrosDeRedActualEnConstruccion, ArrayList<T> solucionEnConstruccion){
 
-		//boolean result = false;
-		//if llegue a la solucion return true
-		if(grafo.cantidadVertices() == solucionEnConstruccion.size()){
-			//terminé
-			return true;
-		}
-		
-		//else hago todo lo demás
-		else{
-
-			//traigo toda la lista de adyacentes de la estación en la que estoy
-			Iterator<T> iteradorDeEstaciones = grafo.obtenerAdyacentes(estacionActual);
-			while(iteradorDeEstaciones.hasNext()){
-
-				//elijo una siguiente
-				T estacionSiguiente = iteradorDeEstaciones.next();
-				//si no tengo ese arco en la solucion me fijo si se puede agregar
-				if(!solucionEnConstruccion.contains(estacionSiguiente)){
-					Arco<T> tunelEntreLasEstaciones = grafo.obtenerArco(estacionActual, estacionSiguiente);
-					int longitudDelTunel = tunelEntreLasEstaciones.getEtiqueta();
-					//si no lo podo lo agrego a la solucion potencial
-					if(!poda(metrosDeRedActualEnConstruccion+longitudDelTunel)){
-						solucionEnConstruccion.add(estacionSiguiente);
-						//sumo ese arco a mi suma solucion parcial
-						metrosDeRedActualEnConstruccion += longitudDelTunel;
-						boolean result = backtracking(grafo, estacionSiguiente, metrosDeRedActualEnConstruccion, solucionEnConstruccion);
-						if (result){
-							if(metrosDeRedActualEnConstruccion<=longitudRedSubterraneo){
-//									//actualizo mejorRedHastaAhora
-								longitudRedSubterraneo = metrosDeRedActualEnConstruccion;
-//									//mi red se vuelve la potencial: redSubterraneo = solucionPotencialEnConstruccion;
-//									redSubterraneo = solucionEnConstruccion;
-//									//creo que hay que hacer redSubte.clear y después redSubte addAll
-								redSubterraneo.clear();
-								redSubterraneo.addAll(solucionEnConstruccion);
-//								redSubterraneo = new ArrayList<>(solucionEnConstruccion);
-					
-							}
-						}
-						solucionEnConstruccion.remove(estacionSiguiente);
-						metrosDeRedActualEnConstruccion -= longitudDelTunel;
-
-					}	
-				}
-			} /*cierro while*/
-			return false;
-		}
-	}
-
-	//metodo que devuelve el arraylist de red de subterraneo
-	public ArrayList<T> getRedSubterraneo(){
+	public ArrayList<Arco<T>> getRedSubterraneo(){
 		return redSubterraneo;
 	}
+
+	public int getLongitudRedSubterraneo() {
+		return longitudRedSubterraneo;
+	}
 	
 
-	
+
 
 }
