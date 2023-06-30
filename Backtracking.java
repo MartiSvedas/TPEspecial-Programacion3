@@ -9,22 +9,28 @@ public class Backtracking<T> {
 	
 	private ArrayList<Arco<T>> redSubterraneo;
 	private int longitudRedSubterraneo;
-	private HashMap<T,Boolean> estaciones;
+	private HashMap<T,Boolean> visitadas;
 	
 	public Backtracking(){
 		this.redSubterraneo = new ArrayList<Arco<T>>();
 		this.longitudRedSubterraneo = Integer.MAX_VALUE;
-		this.estaciones = new HashMap<>();
+		this.visitadas = new HashMap<>();
 	}
 	
 	public void resolverBacktraking(GrafoDirigido<T> grafo) {
 		ArrayList<Arco<T>> arcos= new ArrayList<>(); 
 		ArrayList<Arco<T>> solucion= new ArrayList<>();
 		Iterator<Arco<T>> arcosGrafo = grafo.obtenerArcos();
+		Iterator<T> estaciones = grafo.obtenerVertices();
 		while(arcosGrafo.hasNext()){
 			Arco<T> arco = arcosGrafo.next();
 			arcos.add(arco);
 		}
+		while(estaciones.hasNext()) {
+			T estacion = estaciones.next();
+			visitadas.put(estacion, true);
+		}
+		
 		backtracking(arcos,0,solucion);
 	}
 
@@ -44,8 +50,8 @@ public class Backtracking<T> {
 			for(int i =0; i<arcos.size(); i++){
 				Arco<T> arcoSiguiente = arcos.get(i);
 				T estacionSiguiente = arcoSiguiente.getVerticeDestino();
-					if(!estaciones.containsValue(estacionSiguiente) ) {
-						estaciones.put(estacionSiguiente, false);
+					if(!visitadas.get(estacionSiguiente) ) {
+						visitadas.put(estacionSiguiente, false);
 						arcos.remove(arcoSiguiente);
 						solucionEnConstruccion.add(arcoSiguiente);
 						metrosDeRedActualEnConstruccion += arcoSiguiente.getEtiqueta();
@@ -56,7 +62,7 @@ public class Backtracking<T> {
 					}
 					metrosDeRedActualEnConstruccion -= arcoSiguiente.getEtiqueta();
 					solucionEnConstruccion.remove(arcoSiguiente);
-					estaciones.put(estacionSiguiente, true);
+					visitadas.put(estacionSiguiente, true);
 					arcos.add(arcoSiguiente);
 				
 
