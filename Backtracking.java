@@ -9,17 +9,18 @@ public class Backtracking<T> {
 	
 	private ArrayList<Arco<T>> redSubterraneo;
 	private int longitudRedSubterraneo;
-	private HashMap<T,Boolean> visitadas;
+//	private HashMap<T,Boolean> visitadas;
 	
 	public Backtracking(){
 		this.redSubterraneo = new ArrayList<Arco<T>>();
 		this.longitudRedSubterraneo = Integer.MAX_VALUE;
-		this.visitadas = new HashMap<>();
+//		this.visitadas = new HashMap<>();
 	}
 	
 	public void resolverBacktraking(GrafoDirigido<T> grafo) {
 		ArrayList<Arco<T>> arcos= new ArrayList<>(); 
 		ArrayList<Arco<T>> solucion= new ArrayList<>();
+		HashMap<T,Boolean> visitados= new HashMap<>();
 		Iterator<Arco<T>> arcosGrafo = grafo.obtenerArcos();
 		Iterator<T> estaciones = grafo.obtenerVertices();
 		while(arcosGrafo.hasNext()){
@@ -28,15 +29,15 @@ public class Backtracking<T> {
 		}
 		while(estaciones.hasNext()) {
 			T estacion = estaciones.next();
-			visitadas.put(estacion, true);
+			visitados.put(estacion, false);
 		}
 		
-		backtracking(arcos,0,solucion);
+		backtracking(arcos,0,solucion, visitados);
 	}
 
 	
-	public void backtracking(ArrayList<Arco<T>> arcos, int metrosDeRedActualEnConstruccion, ArrayList<Arco<T>> solucionEnConstruccion){	
-		if(arcos.isEmpty()){
+	public void backtracking(ArrayList<Arco<T>> arcos, int metrosDeRedActualEnConstruccion, ArrayList<Arco<T>> solucionEnConstruccion, HashMap<T,Boolean> visitados){	
+		if(arcos.isEmpty() || !visitados.values().stream().filter(v -> v.equals(false)).findFirst().isPresent()){
 			
 			if(!solucionEnConstruccion.isEmpty()) {
 				if(metrosDeRedActualEnConstruccion<=longitudRedSubterraneo){
@@ -50,22 +51,28 @@ public class Backtracking<T> {
 			for(int i =0; i<arcos.size(); i++){
 				Arco<T> arcoSiguiente = arcos.get(i);
 				T estacionSiguiente = arcoSiguiente.getVerticeDestino();
-					if(!visitadas.get(estacionSiguiente) ) {
-						visitadas.put(estacionSiguiente, false);
+					//if(visitados.get(estacionSiguiente).equals(false)) {
+						visitados.put(estacionSiguiente, true);
 						arcos.remove(arcoSiguiente);
 						solucionEnConstruccion.add(arcoSiguiente);
 						metrosDeRedActualEnConstruccion += arcoSiguiente.getEtiqueta();
-					}
+//}
 					if(!poda(metrosDeRedActualEnConstruccion)){
-						backtracking(arcos, metrosDeRedActualEnConstruccion, solucionEnConstruccion);
+						backtracking(arcos, metrosDeRedActualEnConstruccion, solucionEnConstruccion, visitados);
 
 					}
 					metrosDeRedActualEnConstruccion -= arcoSiguiente.getEtiqueta();
 					solucionEnConstruccion.remove(arcoSiguiente);
-					visitadas.put(estacionSiguiente, true);
+					visitados.put(estacionSiguiente, false);
 					arcos.add(arcoSiguiente);
 				
-
+					//no agrego a solucion
+					arcoSiguiente = arcos.get(i);
+					estacionSiguiente = arcoSiguiente.getVerticeDestino();
+					visitados.put(estacionSiguiente, true);
+					arcos.remove(arcoSiguiente);
+					visitados.put(estacionSiguiente, false);
+					arcos.add(arcoSiguiente);
 			}
 		}
 	}
