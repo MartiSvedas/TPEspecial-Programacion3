@@ -3,6 +3,7 @@ package src.TPEspecial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 
 public class Backtracking<T> {
@@ -37,8 +38,7 @@ public class Backtracking<T> {
 
 	
 	public void backtracking(ArrayList<Arco<T>> arcos, int metrosDeRedActualEnConstruccion, ArrayList<Arco<T>> solucionEnConstruccion, HashMap<T,Boolean> visitados){	
-		if(arcos.isEmpty() || !visitados.values().stream().filter(v -> v.equals(false)).findFirst().isPresent()){
-			
+		if(arcos.isEmpty() || visitados.values().stream().filter(v -> v.equals(true)).count() == visitados.keySet().size()-1 ){
 			if(!solucionEnConstruccion.isEmpty()) {
 				if(metrosDeRedActualEnConstruccion<=longitudRedSubterraneo){
 					longitudRedSubterraneo = metrosDeRedActualEnConstruccion;
@@ -51,12 +51,11 @@ public class Backtracking<T> {
 			for(int i =0; i<arcos.size(); i++){
 				Arco<T> arcoSiguiente = arcos.get(i);
 				T estacionSiguiente = arcoSiguiente.getVerticeDestino();
-					//if(visitados.get(estacionSiguiente).equals(false)) {
 						visitados.put(estacionSiguiente, true);
 						arcos.remove(arcoSiguiente);
 						solucionEnConstruccion.add(arcoSiguiente);
 						metrosDeRedActualEnConstruccion += arcoSiguiente.getEtiqueta();
-//}
+
 					if(!poda(metrosDeRedActualEnConstruccion)){
 						backtracking(arcos, metrosDeRedActualEnConstruccion, solucionEnConstruccion, visitados);
 
@@ -76,6 +75,15 @@ public class Backtracking<T> {
 			}
 		}
 	}
+	
+//	public boolean visiteTodasLasEstaciones(HashMap<T,Boolean> estaciones) {
+//		for(Entry<T, Boolean> key : estaciones.entrySet()){
+//			if(key.getValue()==false) {
+//				return false;
+//		}
+//		}
+//			return true;
+//	}
 	
 	
 	public boolean poda(int sumaCaminoHastaAhora){
