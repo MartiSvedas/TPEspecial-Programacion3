@@ -44,7 +44,7 @@ public class Backtracking<T> {
 			for(int i =0; i<arcos.size(); i++){
 				Arco<T> arcoSiguiente = arcos.get(i);
 				T estacionSiguiente = arcoSiguiente.getVerticeDestino();
-					if(!estaciones.get(estacionSiguiente)) {
+					if(!estaciones.containsValue(estacionSiguiente) ) {
 						estaciones.put(estacionSiguiente, false);
 						arcos.remove(arcoSiguiente);
 						solucionEnConstruccion.add(arcoSiguiente);
