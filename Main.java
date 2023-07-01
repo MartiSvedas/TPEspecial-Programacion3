@@ -8,7 +8,7 @@ public class Main {
 	
 	
 
-		String path = "/home/martu/eclipse-workspace/Programacion3/src/src/TPEspecial/Dataset/dataset1.txt";
+		String path = "/home/martu/eclipse-workspace/Programacion3/src/src/TPEspecial/Dataset/dataset3.txt";
 		CSVReader<Integer> reader = new CSVReader<Integer>(path);
 		reader.read(grafo);
 		
