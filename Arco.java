@@ -24,12 +24,12 @@ public class Arco<T> {
 	}
 	
 	public boolean equals(Arco<T> a) {
-		if(a.verticeOrigen==this.verticeOrigen && a.getVerticeDestino()==this.getVerticeDestino()) {
-			return true;
-		}else {
-			return false;
-		}
+		return (
+				(a.getEtiqueta().equals(this.getEtiqueta()) && a.getEtiqueta().equals(this.getEtiqueta())) 
+				|| 
+				(a.getEtiqueta().equals(this.getEtiqueta()) && a.getEtiqueta().equals(this.getEtiqueta())));
 	}
+
 		
 	public String toString() {
 		return  "[ "+ verticeOrigen +", "+ verticeDestino +" ]";

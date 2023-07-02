@@ -1,5 +1,7 @@
 package src.TPEspecial;
 
+import java.util.Iterator;
+
 public class GrafoNoDirigido<T> extends GrafoDirigido<T>{
 		
 		public void agregarArco(T verticeId1, T verticeId2, int etiqueta) {
@@ -17,5 +19,6 @@ public class GrafoNoDirigido<T> extends GrafoDirigido<T>{
 		public int cantidadArcos() {
 			return super.cantidadArcos() / 2;
 		}
+		
 
 }

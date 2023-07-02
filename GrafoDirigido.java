@@ -83,7 +83,6 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	//Complejidad : O(m ) m-> cantidad de arcos 
 	public Arco<T> obtenerArco(T verticeId1, T verticeId2) {
-		Arco<T> a = new Arco<T>(verticeId1, verticeId2, null);
 		if(compGrafo.containsKey(verticeId1)) {
 			ArrayList<Arco<T>>arcos =compGrafo.get(verticeId1);
 			for(Arco<T> arco : arcos) {
